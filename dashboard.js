@@ -48,17 +48,13 @@ function renderHowToJoinInsideDashboard() {
 
 // Optional fetch from your status API
 function fetchDashboardServerStatus() {
-  const API = "https://your-status-api.workers.dev/status"; // Replace with your real one
-  fetch(API)
+  fetch("https://api.mcstatus.io/v2/status/java/mc.yourserver.net")
     .then(res => res.json())
     .then(data => {
-      document.getElementById("server-online").innerHTML =
-        data.online ? '<span style="color:lime">🟢 Online</span>' : '<span style="color:red">🔴 Offline</span>';
-      document.getElementById("server-players").textContent =
-        data.online ? `${data.players} / ${data.maxPlayers}` : "--";
+      document.getElementById("server-online").innerHTML = data.online ? '🟢 Online' : '🔴 Offline';
+      document.getElementById("server-players").textContent = `${data.players.online} / ${data.players.max}`;
     })
     .catch(() => {
-      document.getElementById("server-online").innerHTML = '<span style="color:gray">❓ Unavailable</span>';
-      document.getElementById("server-players").textContent = "--";
+      document.getElementById("server-online").innerHTML = '❓ Unavailable';
     });
 }
