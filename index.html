@@ -2,26 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Minecraft Server Panel</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <div id="loading-screen">Loading...</div>
-  <div id="app" style="display:none;">
-    <!-- Content is injected via JavaScript modules -->
-  </div>
+<body onload="renderDashboard(); initMenu();">
 
-  <script src="loading.js"></script>
+  <!-- 🔲 Main Content Panel -->
+  <div id="app"></div>
+
+  <!-- ✅ Load Config First -->
+  <script src="config.js"></script>
+
+  <!-- ✅ Then Logic Scripts -->
+  <script src="menu.js"></script>
+  <script src="dashboard.js"></script>
+  <script src="plugin.js"></script>
   <script src="login.js"></script>
   <script src="creation.js"></script>
-  <script src="server-panel.js"></script>
-  <script src="server-info.js"></script>
-  <script src="plugin.js"></script>
-  <script src="plugins.js"></script>
-  <script src="how-to-play.js"></script>
-  <script src="player-name.js"></script>
   <script src="settings.js"></script>
+  <script src="howtoplay.js"></script>
   <script src="contact.js"></script>
+  <script src="playername.js"></script>
+
 </body>
 </html>
