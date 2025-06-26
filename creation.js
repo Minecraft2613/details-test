@@ -1,6 +1,3 @@
-const CF_API = "https://minecraft-details-acc.1987sakshamsingh.workers.dev/";
-const API_TOKEN = "123456server"; // 🔒 Set this same as your Cloudflare secret token
-
 function renderCreateForm() {
   const app = document.getElementById("app");
   app.innerHTML = `
@@ -23,13 +20,11 @@ async function handleCreate() {
   const discord = document.getElementById("create-discord").value.trim();
   const instagram = document.getElementById("create-instagram").value.trim();
   const profilePic = document.getElementById("create-pic").value.trim();
-
   if (!username || !pass) {
-    alert("Username and password required.");
+    alert("Username and password are required.");
     return;
   }
-
-  const accountObj = {
+  const newUser = {
     username,
     pass,
     discord,
@@ -37,7 +32,6 @@ async function handleCreate() {
     profilePic,
     id: crypto.randomUUID()
   };
-
   try {
     const res = await fetch(CF_API, {
       method: "POST",
@@ -45,20 +39,19 @@ async function handleCreate() {
         "Content-Type": "application/json",
         "x-api-token": API_TOKEN
       },
-      body: JSON.stringify(accountObj)
+      body: JSON.stringify(newUser)
     });
-
     if (res.ok) {
       alert("✅ Account created!");
-      localStorage.setItem("account", JSON.stringify(accountObj));
+      localStorage.setItem("account", JSON.stringify(newUser));
       sessionStorage.setItem("loggedIn", "true");
-      loadMainPanel(); // This should render the actual site panel
+      loadMainPanel();
     } else {
       const data = await res.json();
-      alert("❌ Error: " + (data.error || "Failed to create"));
+      alert("❌ " + (data.error || "Account creation failed."));
     }
   } catch (err) {
-    console.error("Account creation failed:", err);
-    alert("⚠️ Network error.");
+    console.error("Error:", err);
+    alert("⚠️ Could not connect to Cloudflare API.");
   }
 }
