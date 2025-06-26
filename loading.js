@@ -1,8 +1,11 @@
-window.addEventListener("DOMContentLoaded", () => {
-  const loading = document.getElementById("loading-screen");
+function showLoadingScreen() {
   const app = document.getElementById("app");
+  app.innerHTML = `
+    <section id="loading">
+      <h1 class="glow">🌀 Loading Server Panel...</h1>
+    </section>
+  `;
   setTimeout(() => {
-    loading.style.display = "none";
-    app.style.display = "block";
-  }, 1500);
-});
+    autoLoginIfAvailable(); // Call login.js function after 2s
+  }, 2000);
+}
