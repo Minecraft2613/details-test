@@ -1,0 +1,10 @@
+name = "details-test"
+main = "index.js"
+compatibility_date = "2024-06-01"
+
+[vars]
+AUTH_TOKEN = "123456server"
+
+[[kv_namespaces]]
+binding = "ACCOUNTS"
+id = "your-kv-id-here"
