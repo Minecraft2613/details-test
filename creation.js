@@ -1,4 +1,5 @@
 const CF_API = "https://minecraft-details-acc.1987sakshamsingh.workers.dev/";
+const API_TOKEN = "123456server"; // 🔒 Set this same as your Cloudflare secret token
 
 function renderCreateForm() {
   const app = document.getElementById("app");
@@ -24,7 +25,7 @@ async function handleCreate() {
   const profilePic = document.getElementById("create-pic").value.trim();
 
   if (!username || !pass) {
-    alert("Username and password are required.");
+    alert("Username and password required.");
     return;
   }
 
@@ -40,7 +41,10 @@ async function handleCreate() {
   try {
     const res = await fetch(CF_API, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-token": API_TOKEN
+      },
       body: JSON.stringify(accountObj)
     });
 
@@ -48,12 +52,13 @@ async function handleCreate() {
       alert("✅ Account created!");
       localStorage.setItem("account", JSON.stringify(accountObj));
       sessionStorage.setItem("loggedIn", "true");
-      loadMainPanel();
+      loadMainPanel(); // This should render the actual site panel
     } else {
-      alert("❌ Failed to create account.");
+      const data = await res.json();
+      alert("❌ Error: " + (data.error || "Failed to create"));
     }
   } catch (err) {
-    console.error(err);
-    alert("⚠️ Error saving account.");
+    console.error("Account creation failed:", err);
+    alert("⚠️ Network error.");
   }
 }
