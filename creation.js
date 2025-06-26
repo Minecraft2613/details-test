@@ -1,0 +1,1 @@
+console.log('Account creation loaded');
