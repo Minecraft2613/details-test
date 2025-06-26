@@ -46,15 +46,30 @@ function renderHowToJoinInsideDashboard() {
   `;
 }
 
-// Optional fetch from your status API
 function fetchDashboardServerStatus() {
-  fetch("https://api.mcstatus.io/v2/status/java/mc.yourserver.net")
+  const serverIP = "mc1524209.fmcs.cloud";
+
+  fetch(`https://api.mcsrvstat.us/2/${serverIP}`)
     .then(res => res.json())
     .then(data => {
-      document.getElementById("server-online").innerHTML = data.online ? '🟢 Online' : '🔴 Offline';
-      document.getElementById("server-players").textContent = `${data.players.online} / ${data.players.max}`;
+      const statusEl = document.getElementById("server-online");
+      const playersEl = document.getElementById("server-players");
+
+      if (!statusEl || !playersEl) return;
+
+      if (data.online) {
+        statusEl.innerHTML = '<span style="color:lime">🟢 Online</span>';
+        playersEl.textContent = `${data.players.online} / ${data.players.max}`;
+      } else {
+        statusEl.innerHTML = '<span style="color:red">🔴 Offline</span>';
+        playersEl.textContent = '--';
+      }
     })
     .catch(() => {
-      document.getElementById("server-online").innerHTML = '❓ Unavailable';
+      const statusEl = document.getElementById("server-online");
+      const playersEl = document.getElementById("server-players");
+      if (statusEl) statusEl.innerHTML = '❓ Unavailable';
+      if (playersEl) playersEl.textContent = '--';
     });
 }
+
