@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const editionSelect = document.getElementById('edition');
     const bedrockNameField = document.getElementById('bedrock-name-field');
     const javaNameField = document.getElementById('java-name-field');
-    const playerDetailsSection = document.getElementById('player-details-section');
+    const voteSection = document.getElementById('vote-section');
     const partyListSection = document.getElementById('party-list-section');
     const registerCandidateForm = document.getElementById('register-candidate-form');
     const liveVoteCountDiv = document.getElementById('live-vote-count');
@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const logoPreview = document.getElementById('logo-preview');
     const uploadLogoBtn = document.getElementById('upload-logo-btn');
     const partyLogoUpload = document.getElementById('party-logo-upload');
+
+    const placeholderImage = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAQAAADa613fAAAAaElEQVR42u3PQREAAAgDoC2G/Yt62e20IIDz9wYBAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgMDbA3cAAR2gLdJPAAAAAElFTkSuQmCC';
 
     let candidates = JSON.parse(localStorage.getItem('candidates')) || [];
     let votes = JSON.parse(localStorage.getItem('votes')) || [];
@@ -71,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
             partyCard.classList.add('party-card');
 
             const partyLogo = document.createElement('img');
-            partyLogo.src = candidate.partyLogo || 'https://via.placeholder.com/100';
+            partyLogo.src = candidate.partyLogo || placeholderImage;
             partyLogo.alt = candidate.partyName;
 
             const partyName = document.createElement('h3');
@@ -89,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 votes.push({ ...playerData, party: candidate.partyName });
                 localStorage.setItem('votes', JSON.stringify(votes));
                 alert(`You have successfully voted for ${candidate.partyName}!`);
-                playerDetailsSection.style.display = 'block';
+                voteSection.style.display = 'block';
                 partyListSection.style.display = 'none';
                 updateLiveVoteCount();
             });
@@ -128,21 +130,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const sectionHeaders = document.querySelectorAll('.section-header');
     sectionHeaders.forEach(header => {
-        header.addEventListener('click', () => {
-            const content = header.nextElementSibling;
-            const parentSection = header.parentElement;
+        header.addEventListener('click', (e) => {
+            const currentSection = e.currentTarget.parentElement;
 
-            if (parentSection.classList.contains('active')) {
-                parentSection.classList.remove('active');
-                content.classList.add('collapsed');
-            } else {
-                document.querySelectorAll('section.active').forEach(activeSection => {
-                    activeSection.classList.remove('active');
-                    activeSection.querySelector('.section-content').classList.add('collapsed');
-                });
-                parentSection.classList.add('active');
-                content.classList.remove('collapsed');
-            }
+            // Close other sections
+            sectionHeaders.forEach(otherHeader => {
+                const otherSection = otherHeader.parentElement;
+                if (otherSection !== currentSection && otherSection.classList.contains('active')) {
+                    otherSection.classList.remove('active');
+                    otherHeader.nextElementSibling.classList.add('collapsed');
+                }
+            });
+
+            // Toggle current section
+            currentSection.classList.toggle('active');
+            e.currentTarget.nextElementSibling.classList.toggle('collapsed');
         });
     });
 
@@ -173,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
             discordInsta: document.getElementById('discord-insta').value
         };
 
-        playerDetailsSection.style.display = 'none';
+        voteSection.style.display = 'none';
         partyListSection.style.display = 'block';
         displayPartyList();
     });
@@ -185,8 +187,8 @@ document.addEventListener('DOMContentLoaded', () => {
     partyLogoUpload.addEventListener('change', () => {
         const file = partyLogoUpload.files[0];
         if (file) {
-            if (file.size > 100 * 1024) { // 100KB size limit
-                alert('Image size should be less than 100KB.');
+            if (file.size > 1 * 1024 * 1024) { // 1MB size limit
+                alert('Image size should be less than 1MB.');
                 return;
             }
             const reader = new FileReader();
@@ -215,11 +217,12 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('candidates', JSON.stringify(candidates));
             alert('Candidate registered successfully!');
             registerCandidateForm.reset();
-            logoPreview.src = 'https://via.placeholder.com/100';
+            logoPreview.src = placeholderImage;
             loginAsCandidate(candidateName);
         } catch (error) {
             if (error.name === 'QuotaExceededError') {
                 alert('Could not save candidate data. The local storage is full. Please clear some space or use a smaller logo.');
+                candidates.pop(); // Remove the failed candidate entry
             } else {
                 alert('An unexpected error occurred. Please try again.');
             }

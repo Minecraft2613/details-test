@@ -10,9 +10,9 @@
 <body>
     <h1>Minecraft Election</h1>
     <div class="container">
-        <section id="vote-section">
+        <section id="vote-section" class="active">
             <h2 class="section-header">Vote <span class="toggle-icon">+</span></h2>
-            <div class="section-content">
+            <div classn="section-content">
                 <form id="player-details-form">
                     <label for="edition">Select Edition:</label>
                     <select id="edition" name="edition">
@@ -62,7 +62,7 @@
                     <input type="text" id="party-name" name="party-name" required>
                     <label for="party-logo-upload">Party Logo:</label>
                     <div class="logo-preview-container">
-                        <img id="logo-preview" src="https://via.placeholder.com/100" alt="Party Logo Preview">
+                        <img id="logo-preview" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAQAAADa613fAAAAaElEQVR42u3PQREAAAgDoC2G/Yt62e20IIDz9wYBAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgMDbA3cAAR2gLdJPAAAAAElFTkSuQmCC" alt="Party Logo Preview">
                     </div>
                     <input type="file" id="party-logo-upload" accept="image/*" style="display: none;">
                     <button type="button" id="upload-logo-btn">Upload Logo</button>
