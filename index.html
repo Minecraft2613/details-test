@@ -1,29 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Minecraft Server Panel</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Election</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
-<body onload="renderDashboard(); initMenu();">
+<body>
+    <h1>Minecraft Election</h1>
+    <div class="container">
+        <section id="vote-section">
+            <h2 class="section-header">Vote <span class="toggle-icon">+</span></h2>
+            <div class="section-content">
+                <form id="player-details-form">
+                    <label for="edition">Select Edition:</label>
+                    <select id="edition" name="edition">
+                        <option value="bedrock">Bedrock</option>
+                        <option value="java">Java</option>
+                    </select>
 
-  <!-- 🔲 Main Content Panel -->
-  <div id="app"></div>
+                    <div id="minecraft-name-fields">
+                        <div id="bedrock-name-field">
+                            <label for="bedrock-name">Minecraft Name:</label>
+                            <div class="bedrock-input">
+                                <span>.</span>
+                                <input type="text" id="bedrock-name" name="bedrock-name" required>
+                            </div>
+                        </div>
+                        <div id="java-name-field" style="display: none;">
+                            <label for="java-name">Minecraft Name:</label>
+                            <input type="text" id="java-name" name="java-name">
+                        </div>
+                    </div>
 
-  <!-- ✅ Load Config First -->
-  <script src="config.js"></script>
+                    <label for="real-name">Real Name:</label>
+                    <input type="text" id="real-name" name="real-name">
 
-  <!-- ✅ Then Logic Scripts -->
-  <script src="menu.js"></script>
-  <script src="dashboard.js"></script>
-  <script src="plugin.js"></script>
-  <script src="login.js"></script>
-  <script src="creation.js"></script>
-  <script src="settings.js"></script>
-  <script src="howtoplay.js"></script>
-  <script src="contact.js"></script>
-  <script src="playername.js"></script>
+                    <label for="discord-insta">Discord or Instagram Username:</label>
+                    <input type="text" id="discord-insta" name="discord-insta">
 
+                    <button type="button" id="next-btn">Next</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="party-list-section" style="display: none;">
+            <h2 class="section-header">Select a Party to Vote For <span class="toggle-icon">+</span></h2>
+            <div class="section-content">
+                <div id="party-list"></div>
+            </div>
+        </section>
+
+        <section id="register-candidate-section">
+            <h2 class="section-header">Register as Candidate <span class="toggle-icon">+</span></h2>
+            <div class="section-content collapsed">
+                <form id="register-candidate-form">
+                    <label for="candidate-name">Candidate Name:</label>
+                    <input type="text" id="candidate-name" name="candidate-name" required>
+                    <label for="party-name">Party Name:</label>
+                    <input type="text" id="party-name" name="party-name" required>
+                    <label for="party-logo-upload">Party Logo:</label>
+                    <div class="logo-preview-container">
+                        <img id="logo-preview" src="https://via.placeholder.com/100" alt="Party Logo Preview">
+                    </div>
+                    <input type="file" id="party-logo-upload" accept="image/*" style="display: none;">
+                    <button type="button" id="upload-logo-btn">Upload Logo</button>
+                    <label for="party-chinn">Party Chinn:</label>
+                    <input type="text" id="party-chinn" name="party-chinn" required>
+                    <button type="submit">Register</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="live-vote-section">
+            <h2 class="section-header">Live Vote Count <span class="toggle-icon">+</span></h2>
+            <div class="section-content collapsed">
+                <div id="live-vote-count"></div>
+            </div>
+        </section>
+
+        <section id="candidate-management-section" style="display: none;">
+            <h2 class="section-header">Candidate Management <span class="toggle-icon">+</span></h2>
+            <div class="section-content collapsed">
+                <div id="candidate-dashboard"></div>
+            </div>
+        </section>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>

@@ -1,175 +1,298 @@
-/* === Base Reset === */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', sans-serif;
-}
-
 body {
-  background-color: #0a0a0a;
-  color: #f0f0f0;
-  padding: 1rem;
+    font-family: 'Press Start 2P', cursive;
+    background-image: url('https://www.transparenttextures.com/patterns/stucco.png');
+    background-color: #88b04b;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    line-height: 1.6;
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
 }
 
-/* === Top Menu Button === */
-#menu-toggle {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  background: #00ffe1;
-  color: #000;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  z-index: 1000;
-  font-weight: bold;
+h1 {
+    font-family: 'Press Start 2P', cursive;
+    color: #5a3e2b;
+    margin-bottom: 30px;
+    font-size: 3em;
+    text-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+    letter-spacing: 2px;
 }
 
-/* === Sidebar === */
-#sidebar {
-  position: fixed;
-  top: 0;
-  left: -240px;
-  width: 220px;
-  height: 100vh;
-  background: #111;
-  color: #fff;
-  padding: 20px;
-  box-shadow: 4px 0 10px #00ffe1;
-  transition: left 0.3s ease;
-  z-index: 999;
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-#sidebar.open {
-  left: 0;
-}
-
-#sidebar h3 {
-  margin-top: 0;
-  color: #00ffe1;
-}
-
-#sidebar ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-#sidebar ul li {
-  margin: 10px 0;
-  cursor: pointer;
-}
-
-#sidebar ul li a {
-  color: #0ff;
-  text-decoration: none;
-}
-
-.sub-menu {
-  margin-left: 10px;
-  list-style-type: circle;
-}
-
-.sub-menu li {
-  font-size: 14px;
-  margin-top: 5px;
-}
-
-/* === Sections === */
 section {
-  margin-top: 2rem;
-  padding: 1rem;
-  background: #1a1a1a;
-  border-radius: 12px;
-  box-shadow: 0 0 10px #00ffe180;
+    background-color: #c0c0c0;
+    border: 4px solid #5a3e2b;
+    border-radius: 8px;
+    box-shadow: 8px 8px 0px rgba(0,0,0,0.4);
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-h2, h3 {
-  color: #00ffe1;
-  margin-bottom: 1rem;
+section:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 12px 12px 0px rgba(0,0,0,0.5);
 }
 
-/* === Forms === */
-input, textarea, select, button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin: 0.5rem 0 1rem;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
+.section-header {
+    background-color: #7a5230;
+    color: #fff;
+    padding: 15px 20px;
+    font-size: 1.8em;
+    text-align: center;
+    cursor: pointer;
+    border-bottom: 4px solid #5a3e2b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+    font-family: 'Press Start 2P', cursive;
 }
 
-input, textarea {
-  background-color: #0f0f0f;
-  color: #fff;
+.toggle-icon {
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: transform 0.3s ease;
 }
 
-button {
-  background-color: #00ffe1;
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.2s;
+.section-header.active .toggle-icon {
+    transform: rotate(45deg);
 }
 
-button:hover {
-  background-color: #00ccc0;
+.section-content {
+    padding: 20px;
+    transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+    max-height: 1000px;
+    opacity: 1;
+    overflow: hidden;
 }
 
-/* === Plugin Grid === */
-.plugin-grid {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+.section-content.collapsed {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
-.plugin-card {
-  background-color: #1a1a1a;
-  padding: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 0 10px #00ffe1;
-  transition: 0.3s ease;
+h2 {
+    display: none;
 }
 
-.plugin-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 15px #00ffe1, 0 0 30px #00ffe1;
+form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #5a3e2b;
+    font-size: 0.9em;
 }
 
-.plugin-card h3 {
-  margin-bottom: 0.5rem;
-  color: #00ffe1;
+form input[type="text"],
+form input[type="file"],
+form select,
+form textarea {
+    width: calc(100% - 24px);
+    padding: 12px;
+    margin-bottom: 18px;
+    border: 2px solid #5a3e2b;
+    border-radius: 4px;
+    font-size: 1em;
+    background-color: #f0f0f0;
+    color: #333;
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: none;
 }
 
-.plugin-card a {
-  display: inline-block;
-  margin-top: 0.5rem;
-  color: #0ff;
-  text-decoration: none;
+form input[type="text"]:focus,
+form input[type="file"]:focus,
+form select:focus,
+form textarea:focus {
+    border-color: #a0a0a0;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+    outline: none;
 }
 
-/* === Status Colors === */
-#server-online span {
-  font-weight: bold;
+.bedrock-input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+    background-color: #f0f0f0;
+    border: 2px solid #5a3e2b;
+    border-radius: 4px;
+    padding-right: 12px;
 }
 
-.glow {
-  text-shadow: 0 0 10px #00ffe1, 0 0 20px #00ffe1;
-  animation: glowPulse 2s infinite;
+.bedrock-input span {
+    padding: 0 10px;
+    font-weight: bold;
+    color: #5a3e2b;
+    font-size: 1.1em;
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: none;
 }
 
-@keyframes glowPulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
+.bedrock-input input {
+    flex-grow: 1;
+    border: none;
+    margin-bottom: 0;
+    padding: 12px 0;
+    background-color: transparent;
 }
 
-/* === Responsive Design === */
-@media (max-width: 600px) {
-  section {
-    padding: 0.8rem;
-  }
-  #sidebar {
-    width: 200px;
-  }
+.bedrock-input input:focus {
+    box-shadow: none;
+}
+
+form button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: 2px solid #2e7d32;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    width: 100%;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+}
+
+form button:hover {
+    background-color: #388E3C;
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.4);
+}
+
+form button:active {
+    transform: translate(0, 0);
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+}
+
+#live-vote-count .vote-count-item {
+    display: flex;
+    align-items: center;
+    background-color: #e0e0e0;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #a0a0a0;
+    border-radius: 4px;
+    font-size: 1em;
+    color: #333;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: none;
+}
+
+.party-logo-small {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border: 2px solid #5a3e2b;
+    border-radius: 4px;
+    margin-right: 15px;
+}
+
+#party-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.party-card {
+    background-color: #e0e0e0;
+    border: 2px solid #a0a0a0;
+    border-radius: 4px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.party-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.3);
+}
+
+.party-card img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 2px solid #5a3e2b;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.party-card h3 {
+    color: #5a3e2b;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+.party-card p {
+    font-size: 0.9em;
+    margin-bottom: 10px;
+    color: #333;
+    text-shadow: none;
+}
+
+.party-card button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: 2px solid #2e7d32;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    width: 100%;
+}
+
+.party-card button:hover {
+    background-color: #388E3C;
+}
+
+#candidate-dashboard .party-logo-large {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 4px solid #5a3e2b;
+    border-radius: 8px;
+    margin: 15px auto;
+    display: block;
+}
+
+.logo-preview-container {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#logo-preview {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 2px dashed #5a3e2b;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+#upload-logo-btn {
+    background-color: #FFD700;
+    color: #5a3e2b;
+    border: 2px solid #b8860b;
+    margin-bottom: 15px;
+}
+
+#upload-logo-btn:hover {
+    background-color: #DAA520;
 }
